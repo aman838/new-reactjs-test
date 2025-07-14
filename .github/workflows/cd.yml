@@ -9,7 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu
-    environment: production
+    # environment: production
 
     steps:
       - name: "Setup Nodejs"

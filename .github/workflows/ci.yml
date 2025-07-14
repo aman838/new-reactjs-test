@@ -1,4 +1,5 @@
 name: "simple React CI workflow pipeline"
+
 on:
   push:
     branches:
@@ -10,28 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: setup nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "21"
 
-      - name: check node version
-        run: node --version
-
-      - name: clone the repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: "Install dependencies"
+      - name: Install Dependencies
         run: npm install
 
-      - name: "Run tests"
+      - name: Run Tests
         run: npm run test
 
-      - name: "Run build"
+      - name: Build Project
         run: npm run build
 
-      - name: Upload production build
+      - name: Upload Production Build
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: dist
+          path: dist # ⬅️ Make sure this matches your actual build output folder

@@ -1,36 +1,42 @@
 name: "CD Pipeline"
+
 on:
   workflow_run:
-    workflows: ["simple React CI workflow pipeline"]
+    workflows: ["simple React CI workflow pipeline"] # 👈 Make sure this matches the CI name
     types:
       - completed
+
   workflow_dispatch:
+
+permissions:
+  actions: read # ✅ Required for download-artifact
+  contents: read
 
 jobs:
   deploy:
-    runs-on: ubuntu
-    # environment: production
+    runs-on: ubuntu-latest
+    environment: production
 
     steps:
-      - name: "hello world"
-        run: echo 'hello world'
-    #   - name: "Setup Nodejs"
-    #     uses: actions/setup-node@v4
-    #     with:
-    #       node-version: "21"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "21"
 
-    #   - name: "Setup Vercel Cli"
-    #     run: npm i -g vercel@latest
+      - name: Install Vercel CLI
+        run: npm i -g vercel@latest
 
-    #   - name: Print event
-    #     run: echo '${{ toJSON(github.event) }}'
+      - name: Log Triggering Event
+        run: echo '${{ toJSON(github.event) }}'
 
-    #   - name: "Download build files"
-    #     uses: actions/download-artifact@v4
-    #     with:
-    #       name: build
-    #       run-id: ${{ github.event.workflow_run.id }}
-    #       github-token: ${{ github.token }}
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          run-id: ${{ github.event.workflow_run.id }}
 
-    #   - name: "Deploy to vercel"
-    #     run: vercel --prod  --token=${{ secrets.VERCEL_TOKEN }} --confirm --name react-test
+      - name: Show Build Files
+        run: ls -la
+
+      - name: Deploy to Vercel
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm --name react-test

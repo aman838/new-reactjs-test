@@ -1,15 +1,10 @@
 name: "CD Pipeline"
-
 on:
   workflow_run:
     workflows: ["simple React CI workflow pipeline"]
     types:
       - completed
   workflow_dispatch:
-
-permissions:
-  actions: read
-  contents: read
 
 jobs:
   deploy:
@@ -22,16 +17,18 @@ jobs:
         with:
           node-version: "21"
 
-      - name: "Setup Vercel CLI"
+      - name: "Setup Vercel Cli"
         run: npm i -g vercel@latest
 
-      - name: "Debug: Print event payload"
+      - name: Print event
         run: echo '${{ toJSON(github.event) }}'
 
       - name: "Download build files"
         uses: actions/download-artifact@v4
         with:
           name: build
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
 
-      - name: "Deploy to Vercel"
-        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm --name react-test
+      - name: "Deploy to vercel"
+        run: vercel --prod  --token=${{ secrets.VERCEL_TOKEN }} --confirm --name react-test

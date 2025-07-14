@@ -20,6 +20,9 @@ jobs:
       - name: "Setup Vercel Cli"
         run: npm i -g vercel@latest
 
+      - name: Print event
+        run: echo '${{ toJSON(github.event) }}'
+
       - name: "Download build files"
         uses: actions/download-artifact@v4
         with:

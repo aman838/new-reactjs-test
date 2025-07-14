@@ -3,8 +3,8 @@ name: "simple React CI workflow pipeline"
 on:
   push:
     branches:
-      - master
       - main
+      - master
 
 jobs:
   build-and-test:
@@ -16,23 +16,23 @@ jobs:
         with:
           node-version: "21"
 
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Run Tests
+      - name: Run tests
         run: npm run test
 
-      - name: Build Project
+      - name: Build project
         run: npm run build
 
-      - name: Debug Build Folder
-        run: ls -la ./dist # ✅ change to match your build output
+      - name: Debug build output
+        run: ls -la dist # <- change this to 'build' if you're using CRA
 
-      - name: Upload Production Build
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: dist # ✅ change to match your build output
+          path: dist # <- change this to 'build' if needed

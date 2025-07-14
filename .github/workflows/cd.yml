@@ -12,23 +12,25 @@ jobs:
     # environment: production
 
     steps:
-      - name: "Setup Nodejs"
-        uses: actions/setup-node@v4
-        with:
-          node-version: "21"
+      - name: "hello world"
+        run: echo 'hello world'
+    #   - name: "Setup Nodejs"
+    #     uses: actions/setup-node@v4
+    #     with:
+    #       node-version: "21"
 
-      - name: "Setup Vercel Cli"
-        run: npm i -g vercel@latest
+    #   - name: "Setup Vercel Cli"
+    #     run: npm i -g vercel@latest
 
-      - name: Print event
-        run: echo '${{ toJSON(github.event) }}'
+    #   - name: Print event
+    #     run: echo '${{ toJSON(github.event) }}'
 
-      - name: "Download build files"
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          run-id: ${{ github.event.workflow_run.id }}
-          github-token: ${{ github.token }}
+    #   - name: "Download build files"
+    #     uses: actions/download-artifact@v4
+    #     with:
+    #       name: build
+    #       run-id: ${{ github.event.workflow_run.id }}
+    #       github-token: ${{ github.token }}
 
-      - name: "Deploy to vercel"
-        run: vercel --prod  --token=${{ secrets.VERCEL_TOKEN }} --confirm --name react-test
+    #   - name: "Deploy to vercel"
+    #     run: vercel --prod  --token=${{ secrets.VERCEL_TOKEN }} --confirm --name react-test

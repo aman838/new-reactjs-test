@@ -27,6 +27,9 @@ jobs:
       - name: Print Workflow Run ID
         run: echo "Workflow Run ID ${{ github.event.workflow_run.id }}"
 
+      - name: Debug artifact folder
+        run: du -sh . && find .
+
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:

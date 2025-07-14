@@ -28,8 +28,11 @@ jobs:
       - name: Build Project
         run: npm run build
 
+      - name: Debug Build Folder
+        run: ls -la ./build # or ./dist
+
       - name: Upload Production Build
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: dist # ⬅️ Make sure this matches your actual build output folder
+          path: build # ⬅️ Use "dist" if you're using Vite
